@@ -1,91 +1,91 @@
-# Getting a free certificate
+# Απόκτηση ενός δωρεάν πιστοποιητικού
 
-This page guides you through the process of obtaining an HTTPS certificate for your site. This is a real certificate, not a self-signed certificate, and works in all major browsers.
+Αυτή η σελίδα είναι ο οδηγός σου για την απόκτηση ενός HTTPS πιστοποιητικού για τον ιστότοπό σου. Πρόκειτε για ένα πραγματικό πιστοποιητιο, όχι ένα self-signed πιστοποιητικό, και δουλεύει σε όλους τους κύριους browser.
 
-The CA which we'll use is StartSSL. They provide basic certificates for free, although will charge for other types, such as wildcard certificates.
+Η έμπιστη αρχή που θα χρησιμοποιήσουμε είναι η StartSSL. Προσφέρουν βασικά πιστοποιητικά δωρεάν, αλλά θα χρεώσουν για άλλους τύπους, όπως πιστοποιητικά wildcard.
 
-## Generating a public/private keypair
+## Δημιουργία ενός δημόσιου/ιδιωτικού ζεύγους κλειδιού
 
-A keypair can be generated with OpenSSL:
+Ένα ζεύγος κλειδιού μπορεί να δημιουργηιεί με το OpenSSL:
 
     openssl req -new -newkey rsa:2048 -keyout example.com.key -nodes -out example.com.csr
 
-This command will prompt you for a country name, state name etc. *All of this can be ignored*. Just hit enter to accept the defaults because StartSSL doesn't use that information.
+Αυτή η εντολή θα προτρέψει τον χρήστη για το όνομα της χώρας, της πολιτείας κλπ. *Όλα αυτά μπορούν να αγνοηθούν*. Απλά πάτα enter για να αποδεχθείς τις προεπιλογές επειδή το StartSSL δεν χρησιμοποιεί αυτές τις πληροφορίες.
 
-The only value you may want to give is a passphrase to protect the private key. Keep in mind that your webserver needs the private key so, if you set a passphrase, you'll need to enter it whenever you restart the webserver.
+Η μόνη πληροφορία που ίσως θέλεις να δώσεις είναι ένας κωδικός για να προστατέψεις το ιδιωτικό κλειδί σου. Έχε στον νου σου ότι ο webserver χρειάζεται το ιδιωτικό κλειδί οπότε, αν χρησιμοποιήσεις κωδικό, θα πρέπει να τον πληκτρολογείς κάθε φορά που επανεκινείς τον webserver.
 
-Now that we have a key, we can get a certificate issued by the CA.
+Τώρα που έχουμε ένα κλειδί, μπορούμε να πάρουμε ένα πιστοποιητικό υπογεγραμμένο από την Έμπιστη Αρχή.
 
 ## StartSSL
 
-StartSSL is free, but it's not the best designed website in the world. Below is a series of screenshots which will hopefully guide you through the process. Not absolutely every step has a screenshot so do the obvious thing at each step. If you need to click something then the screenshot may have a red ring around the the target.
+Το StartSSL είναι δωρεάν, αλλά δεν είναι η καλύτερα σχεδιασμένη ιστοσελίδα στον κόσμο. Παρακάτω είναι μία σειρά από screenshots που θα σε καθοδηγήσουν. Δεν υπάρχει ένα screenshot για απολύτως όλα τα βήματα οπότε κάνε την προφανή ενέργεια σε κάθε βήμα. Αν πρέπει να κάνεις κλικ σε κάτι τότε το screenshot ίσως έχει ένα κόκκινο δαχτυλίδι γύρω από τον στόχο.
 
-Firstly, *use Firefox*. Seriously.
+Αρχικά, *χρησιμοποίησε Firefox*. Σοβαρά.
 
-Go to [StartSSL](https://startssl.com) (it should have an EV certificate). On the frontpage, click &ldquo;Control Panel&rdquo; at the top-right to get started.
+Πήγαινε στο [StartSSL](https://startssl.com) (θα πρέπει να έχει ένα πιστοποιητικό τύπου EV). Στην αρχική σελίδα, κάνε κλικ στο &ldquo;Control Panel&rdquo; πάνω δεξιά για να ξεκινήσεις.
 
-We assume that you've never used StartSSL before so need to sign up:
+Υποθέτουμε ότι δεν έχεις ξαναχρησιμοποιήσει το StartSSL στο παρελθόν οπότε πρέπει να κάνεις εγγραφή:
 
 ![StartSSL signup page](../../../raw/master/startssl/startssl-signup.png)
 
-Enter your details:
+Γράψε τα στοιχεία σου:
 
 ![StartSSL account page](../../../raw/master/startssl/startssl-account.png)
 
-You'll need to verify the email address by entering the magic value that is sent to you:
+Θα πρέπει να επιβεβαιώσεις το email σου εισάγοντας την μαγική τιμή που θα σου σταλεί:
 
 ![](../../../raw/master/startssl/startssl-verify1.png)
 
-StartSSL doesn't use passwords for accounts, it uses client-side certificates. You need to generate one and install it in your browser:
+Το StartSSL δεν χρησιμοποιεί κωδικούς για τους λογαριασμούς, χρησιμοποιεί client-side πιστοποιητικά. Πρέπει να δημιουργήσεις ένα και να το εγκαταστήσεις στον browser σου:
 
 ![](../../../raw/master/startssl/startssl-genkey.png)
 
-![installing a client side certificate](../../../raw/master/startssl/startssl-clientsidecert.png)
+![εγκατάσταση client-side πιστοποιητικού](../../../raw/master/startssl/startssl-clientsidecert.png)
 
-Once your account has been setup, you'll be at your "Control Panel". First you need to prove that you control the site that you are getting a certificate for. For free certificates, this means being able to accept email for some distinguished usernames.
+Αφού τελειώσεις με το άνοιγμα του λογαριασμού σου, θα βρεθείς στο "Control Panel" σου. Αρχικά πρέπει να αποδείξεις ότι έχεις τον έλεγχο του ιστότοπου για τον οποίο θες να εκδόσεις ένα πιστοποιητικό. Για τα δωρεάν πιστοποιητικά, αυτό σημαίνει να μπορείς να λάβεις email για κάποια συγκεκριμένα usernames.
 
 ![StartSSL control panel page](../../../raw/master/startssl/startssl-cp.png)
 
-You are validating a domain name.
+Επικυρώνεις ένα όνομα ιστοτόπου.
 
 ![](../../../raw/master/startssl/startssl-valtype.png)
 
-You must be able to receive email for one of the distinguished usernames:
+Πρέπει να μπορείς να λάβεις email για ένα από τα συγκεκριμένα usernames:
 
 ![selecting an email address](../../../raw/master/startssl/startssl-selemail.png)
 
-Wait for the email and enter the code contained in it into the textbox.
+Περίμενε για το email και γράψε τον κωδικό που περιέχει στο πλαίσιο κειμένου.
 
 ![](../../../raw/master/startssl/startssl-code2.png)
 
-Once you have proved that you own the domain, finished the validations wizard and enter the certificate wizard.
+Αφού αποδείξεις ότι είσαι ο ιδιοκτήτης του ιστότοπου, επίλεξε 'Finish' στο 'Validation wizard' και μπες στο 'Certificate wizard'.
 
 ![](../../../raw/master/startssl/startssl-valok.png)
 
-You want an HTTPS certificate.
+Θέλεις ένα HTTPS πιστοποιητικό.
 
 ![selecting a certificate type](../../../raw/master/startssl/startssl-certtype.png)
 
-Select the domain that you just validated.
+Επίλεξε τον ιστότοπο που μόλις επικύρωσες.
 
 ![selecting domains for the certificate](../../../raw/master/startssl/startssl-seldomains.png)
 
-I strongly recommend that you add a name for `www` to the certificate.
+Σου συνιστούμε ιδιαίτερα να προσθέσεις το subdomain `www` στο πιστοποιητικό.
 
 ![](../../../raw/master/startssl/startssl-adddomains.png)
 
-This bit is important. *Skip the private key generation.* You already generated a private key at the very beginning. We're going to give StartSSL the public key to sign and the private key should never leave your control.
+Αυτό το βήμα είναι σημαντικό. *Παράκαμψε την δημιουργία ιδιωτικού κλειδιού.* Έχεις ήδη φτιάξει το ιδιωτικό κλειδί σου στην αρχή του οδηγού. Θα δώσουμε στο StartSSL το δημόσιο κλειδί μας για να το υπογράψει και το ιδιωτικό κλειδί δεν θα πρέπει να φύγει ποτέ από τον έλεγχό σου.
 
 ![skipping private key generation](../../../raw/master/startssl/startssl-genprivkey.png)
 
-The `openssl` command that you ran at the beginning created two files. One of them was a CSR file. You need to open this up and paste its contents into the textbox. It's a plain ASCII file so almost anything should open it.
+Η εντολή `openssl` που έτρεξες στην αρχή δημιούργησε δύο αρχεία. Το ένα από αυτά ήταν ένα αρχείο CSR. Πρέπει να ανοίξεις αυτό το αρχείο και να επικολλήσεις τα περιεχόμενά του μέσα στο πλαίσιο κειμένου. Τα αρχεία CSR είναι απλά αρχεία κειμένου οπότε σχεδόν οτιδήποτε θα πρέπει να μπορεί να το ανοίξει.
 
 ![pasting in the CSR](../../../raw/master/startssl/startssl-csr.png)
 
-Now we're almost done! This is your signed certificate. Paste it somewhere safe. It's not secret, but you don't want to lose it!
+Έχουμε σχεδόν τελειώσει! Αυτό είναι το υπογεγραμμένο σου πιστοποιητικό. Αποθήκευσέ το σε κάποια ασφαλή τοποθεσία. Δεν είναι κρυφό, αλλά δεν θες να το χάσεις!
 
 ![getting the final certificate](../../../raw/master/startssl/startssl-savecert.png)
 
-## Intermediate certificates
+## Ενδιάμεσα πιστοποιητικά
 
-You must configure your webserver with the correct intermediate certificate in order for your certificate to work. You can download [StartSSL's intermediate CA certificate](https://www.startssl.com/certs/sub.class1.server.ca.pem).
+Πρέπει να ρυθμίσεις τον webserver σου με τα σωστά ενδιάμεσα πιστοποιητικά για να δουλέψει το πιστοποιητικό σου. Μπορείς να κατεβάσεις τα [ενδιάμεσα πιστοποιητικά του StartSSL](https://www.startssl.com/certs/sub.class1.server.ca.pem).
